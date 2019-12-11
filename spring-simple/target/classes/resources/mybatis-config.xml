@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+	PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+			"http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+	<!-- mybatis 활동 방식 설정 -->
+	<settings>
+		<setting name="cacheEnabled" value="false" />
+		<setting name="useGeneratedKeys" value="true" />
+		<setting name="defaultExecutorType" value="REUSE" />
+	</settings>
+	
+	<!-- mybatis 에서 사용할 타입 정의 -->
+	<typeAliases>
+		<typeAlias alias="mVO" type="com.simple.www.vo.MemberVO" />
+	</typeAliases>
+	
+	<!-- mybatis에서 사용할 질의명령문서 추가 -->
+	<mappers>
+		<mapper resource="com/simple/www/sql/MemberSQL.xml" />
+	</mappers>
+	
+</configuration>
+			
