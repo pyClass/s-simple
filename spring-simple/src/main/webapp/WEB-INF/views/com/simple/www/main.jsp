@@ -17,7 +17,7 @@
 			$(location).attr('href', '/www/member/join.van');
 		});
 		$('#logout').click(function(){
-			$(location).attr('href', '/member/logout.cls');
+			$(location).attr('href', '/www/member/logout.van');
 		});
 		
 		/* 회원 정보보기 비동기 처리 */

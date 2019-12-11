@@ -25,6 +25,14 @@ public class Member {
 		return mv;
 	}
 	
+	@RequestMapping("logout.van")
+	public ModelAndView logout(ModelAndView mv, RedirectView rv, HttpSession session) {
+		session.setAttribute("SID", "");
+		rv.setUrl("/www/");
+		mv.setView(rv);
+		return mv;
+	}
+	
 	@RequestMapping("loginProc.van")
 	public ModelAndView loginProc(HttpSession session, 
 									RedirectView rv, 
