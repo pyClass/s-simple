@@ -7,14 +7,12 @@
 <title>login Test 1st</title>
 
 <c:if test="${not empty SID}">
-	<meta http-equiv="Refresh" content="3;url=/" />
+	<meta http-equiv="Refresh" content="3;url=/www/main.van" />
 </c:if>
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<link rel="stylesheet" href="/css/w3.css" >
-<script type="text/javascript" src="/js/jquery-3.4.1.min.js" ></script>
+<link rel="stylesheet" href="/www/css/w3.css" >
+<script type="text/javascript" src="/www/js/jquery-3.4.1.min.js" ></script>
 <style>
 	.h1 {
 		line-height: 350%;
@@ -35,7 +33,7 @@
 	<!-- 로그인 폼 페이지 -->
 	<c:if test="${empty SID}">
 <!-- 		<form method="POST" action="/member/loginExec.nop" id="frm"  class="w3-col m6 w3-center w3-margin-top" > -->
-		<form method="POST" action="/member/loginProc.cls" id="frm"  class="w3-col m6 w3-center w3-margin-top" >
+		<form method="POST" action="/www/member/loginProc.van" id="frm"  class="w3-col m6 w3-center w3-margin-top" >
 			<h2 class="w3-col w3-padding w3-card w3-center w3-blue">Login</h2>
 			<div class="w3-col w3-card w3-padding">
 				<div class="w3-col">
