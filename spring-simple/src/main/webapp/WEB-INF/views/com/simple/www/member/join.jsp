@@ -104,14 +104,16 @@
 			var sid = $('#id').val();
 			
 			$.ajax({
-				url : "/member/idCheck.ck",
+				url : "/www/member/idCheck.van",
 				type : "post",
-				dataType : "json",
+				dataType : "text",
+/* 				dataType : "json", */
 				data : {
 					"id" : sid
 				},
 				success : function(data){
-					var ck = data.cnt;
+					var ck = data;
+/* 					var ck = data.cnt; */
 					if(ck == 1){
 						// 이미 회원 가입한 사람이 있는 경우
 						$('#id').val("");
@@ -165,7 +167,7 @@
 	<div class="container">
 		<div class="joinLogo">J O I N</div>
 		<div class="listbox">
-	<form method="POST" action="/member/joinProc.cls" enctype="multipart/form-data">
+	<form method="POST" action="/member/joinProc.van" ><!--  enctype="multipart/form-data"> -->
 		<ul class="ulcl w3-margin-bottom w3-padding">
 			<li id="idli">
 				<label for="id">I D</label>
@@ -209,19 +211,19 @@
 					<div class="w3-col m4">
 						<input type="radio" name="avt" value="11">
 						<div>
-							<img src="/img/avatar/img_avatar1.png" class="avt1">
+							<img src="/www/img/avatar/img_avatar1.png" class="avt1">
 						</div>
 					</div>
 					<div class="w3-col m4">
 						<input type="radio" name="avt" value="12">
 						<div>
-							<img src="/img/avatar/img_avatar2.png" class="avt1">
+							<img src="/www/img/avatar/img_avatar2.png" class="avt1">
 						</div>
 					</div>
 					<div class="w3-col m4">
 						<input type="radio" name="avt" value="13">
 						<div>
-							<img src="/img/avatar/img_avatar3.png" class="avt1">
+							<img src="/www/img/avatar/img_avatar3.png" class="avt1">
 						</div>
 					</div>
 				</div>
@@ -229,19 +231,19 @@
 					<div class="w3-col m4">
 						<input type="radio" name="avt" value="14">
 						<div>
-							<img src="/img/avatar/img_avatar4.png" class="avt1">
+							<img src="/www/img/avatar/img_avatar4.png" class="avt1">
 						</div>
 					</div>
 					<div class="w3-col m4">
 						<input type="radio" name="avt" value="15">
 						<div>
-							<img src="/img/avatar/img_avatar5.png" class="avt1">
+							<img src="/www/img/avatar/img_avatar5.png" class="avt1">
 						</div>
 					</div>
 					<div class="w3-col m4">
 						<input type="radio" name="avt" value="16">
 						<div>
-							<img src="/img/avatar/img_avatar6.png" class="avt1">
+							<img src="/www/img/avatar/img_avatar6.png" class="avt1">
 						</div>
 					</div>
 				</div>

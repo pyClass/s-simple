@@ -7,6 +7,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
@@ -81,5 +82,36 @@ public class Member {
 		mv.addObject("name", name);
 		mv.setViewName("member/showName");
 		return mv;
+	}
+	
+	@RequestMapping(value="idCheck.van", produces="text/plain;charset=UTF-8")
+	@ResponseBody
+	public int idCheck(String id) {
+//	public MemberVO idCheck(String id) {
+		int cnt = 0;
+		cnt = mDAO.idCheck(id);
+//		MemberVO vo = mDAO.idCheck(id);
+		/*
+			우리가 현재 필요한 데이터는 json 형식의 데이터다.
+			데이터의 숫자가 적을 경우는 해당 json 형식의 데이터를 만들어 주는것이 문제 없지만
+			여러개 라면 문제가 될 수 있다.
+			코드의 길이가 늘어날 수 있고
+			확인하는 작업이 불편해진다.
+			
+			만약 vo의 모든 변수에 대한 데이터를 json 형식으로 변환시켜야한다면 
+			모든 변수의 키값을 만들고 데이터를 입력해 줘야 하겠다.
+			
+			다행이도 스프링에서는 json 문서를 쉽게 만들 수 있는 방법을 제공하고 있다.
+			방법 ]
+				실행함수의 반환값을 VO 타입으로 정하고
+				함수에 
+					@ResponseBody
+				라는 어노테이션을 붙여주면 된다.
+				VO 에 선언된 변수 이름을 키값으로 하고
+				입력된 데이터를 벨류로 해서 
+				json 문서를 알아서 만들어 준다.
+		 */
+		return cnt;
+//		return vo;
 	}
 }

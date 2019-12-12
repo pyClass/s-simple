@@ -30,5 +30,12 @@
 	처리함수	:	showName()
 	응답문서	:	/WEB-INF/views/com/simple/www/member/showName.jsp
 	
+6. 회원 아이디 카운트 조회 요청 (비동기)
+	요청내용	: 	/member/idCheck.van
+	파라미터	: 	id
+	컨트롤러	:	com.simple.www.controller.Member
+	처리함수	:	idCheck
+	응답문서	:	json || text
+	
 	
 

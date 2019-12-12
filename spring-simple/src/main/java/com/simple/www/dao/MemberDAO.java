@@ -17,6 +17,11 @@ public class MemberDAO {
 		return cnt;
 	}
 	
+	public int idCheck(String id) {
+//	public MemberVO idCheck(String id) {
+		return sqlSession.selectOne("mSQL.idCount", id);
+	}
+	
 	public List<MemberVO> getIdList(){
 		return sqlSession.selectList("mSQL.idList");
 	}
