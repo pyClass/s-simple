@@ -1,0 +1,34 @@
+# 스프링 수업예제 요청 설계
+
+---------------------------------------------------
+# 회원 관련 요청 처리
+
+1. 로그인 폼 보기
+	요청내용	: 
+	파라미터	: 
+	컨트롤러	:
+	처리함수	:
+	응답문서	:
+	
+2. 로그인 처리 요청
+
+3. 회원가입 폼 보기
+
+4. 회원가입 처리 요청
+
+5.0 회원 아이디 리스트
+	요청내용	: 	/member/showId.van
+	파라미터	: 	무
+	컨트롤러	:	com.simple.www.controller.Member
+	처리함수	:	showId()
+	응답문서	:	/WEB-INF/views/com/simple/www/member/idList.jsp
+	
+5. 회원 이름 보기 요청
+	요청내용	: 	/member/showName.van
+	파라미터	: 	mno(회원번호)
+	컨트롤러	:	com.simple.www.controller.Member
+	처리함수	:	showName()
+	응답문서	:	/WEB-INF/views/com/simple/www/member/showName.jsp
+	
+	
+

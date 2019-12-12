@@ -152,6 +152,10 @@
 			$(location).attr('href', '/survey/survey.cls');
 		});
 		
+		$('#idList').click(function(){
+			$(location).attr('href', '/member/showId.van');
+		});
+		
 		
 /* 		
 		$('#memberEdit').click(function(){
@@ -169,6 +173,7 @@
 			<c:if test="${empty SID}">
 				<div class="w3-col m2 w3-red w3-button" id="login">로그인</div>
 				<div class="w3-col m2 w3-purple w3-button" id="join">회원가입</div>
+				<div class="w3-col m2 w3-bule w3-button" id="idList">회원리스트</div>
 			</c:if>
 			<c:if test="${not empty SID}">
 				<div class="w3-col m2 w3-pink w3-button" id="logout">로그아웃</div>

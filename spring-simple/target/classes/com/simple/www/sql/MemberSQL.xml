@@ -128,4 +128,25 @@
 			m_id = #{id}
 	</select>
 	
+	<select id="idList" resultType="mVO">
+		SELECT
+			m_no mno, m_id id, 
+			to_char(m_join, 'yyyy/mm/dd HH:MI:ss') sDate, 
+			a_img avatar
+		FROM
+			member, avatar
+		where
+			m_avt = a_no
+	</select>
+	
+	<select id="selName" resultType="string" parameterType="string">
+<!-- 	<select id="selName" resultType="string" parameterType="int"> -->
+		SELECT
+			m_name
+		FROM
+			member
+		WHERE
+			m_no = to_number(#{mno})
+	</select>
+	
 </mapper>

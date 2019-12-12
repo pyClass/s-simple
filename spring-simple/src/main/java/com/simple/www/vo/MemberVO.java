@@ -29,7 +29,15 @@ public class MemberVO {
 	private Time joinTime;
 	private String sDate;
 	private String sTime;
+	private String avatar;
 	
+	
+	public String getAvatar() {
+		return avatar;
+	}
+	public void setAvatar(String avatar) {
+		this.avatar = avatar;
+	}
 	public int getMno() {
 		return mno;
 	}

@@ -1,5 +1,7 @@
 package com.simple.www.controller;
 
+import java.util.*;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,6 +60,26 @@ public class Member {
 	public ModelAndView joinForm(ModelAndView mv) {
 		mv.setViewName("member/join");
 		
+		return mv;
+	}
+	
+	@RequestMapping("showId.van")
+	public ModelAndView showId(ModelAndView mv) {
+		List<MemberVO> list = mDAO.getIdList();
+		
+		mv.addObject("LIST", list);
+		mv.setViewName("member/idList");
+		return mv;
+	}
+	
+	@RequestMapping("showName.van")
+	public ModelAndView showName(String mno, String avt, ModelAndView mv) {
+//		public ModelAndView showName(int mno, String avt, ModelAndView mv) {
+		
+		String name = mDAO.getName(mno);
+		mv.addObject("avatar", avt);
+		mv.addObject("name", name);
+		mv.setViewName("member/showName");
 		return mv;
 	}
 }

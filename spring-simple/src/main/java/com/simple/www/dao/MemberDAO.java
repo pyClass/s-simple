@@ -16,4 +16,13 @@ public class MemberDAO {
 		int cnt = sqlSession.selectOne("mSQL.Login", vo);
 		return cnt;
 	}
+	
+	public List<MemberVO> getIdList(){
+		return sqlSession.selectList("mSQL.idList");
+	}
+	
+	public String getName(String mno) {
+//		public String getName(int mno) {
+		return sqlSession.selectOne("mSQL.selName", mno);
+	}
 }
