@@ -8,10 +8,45 @@
 						http://www.springframework.org/schema/context 
 						http://www.springframework.org/schema/context/spring-context-4.3.xsd">
 	
-	<!--  -->
+	<!-- 
+		annotation-config 태그는 기본 xml 에서는 제공하지 않는 태그
+		이 태그를 사용하도록 하기 위해서는 context라는 스키마를 사용하겠다고 선언을 해줘여 한다.
+		
+		1. 스키마 사용 선언을 해준다.
+		2. 해당 스키마를 파싱(번역)할 수 있는 도구를 지정해야 한다.
+	 -->
 	
 	<!-- Root Context: defines shared resources visible to all other web components -->
 	<context:annotation-config />
+	
+	<!-- 
+		bean 처리를 하기 위한 태그 
+		
+		빈을 등록하는 방법
+			<bean id="구분값" class="실제클래스의 패키지경로와 클래스 이름">
+			
+		예]
+			<bean id="boardDAO" class="com.simple.www.dao.BoardDAO" />
+	-->
+	
+	<!-- 
+		mybatis 설정 
+			주의 ]
+				xml 파일은 자바 파일이 아니다.
+				따라서 자바의 패키지 경로를 사용하는 것이 아니고
+				일반 파일의 폴더 경로로 처리해야 한다.
+				
+				그래서 경로를 부분할 때 구분자로 . 을 사용하지 않고 /를 사용해서 처리한다.
+				
+			mybatis를 이용해서 데이터베이스를 처리하기 위해서는 
+			커넥션이 반드시 필요하다.
+			
+			그런데 jsp 에서 커넥션이라고 부르는 것은 
+			오라클에서는 Session 이라고 부르고
+			마이바티스 역시 세션이라고 부른다.
+			
+			이 세션이 DAO 클래스에서 사용이 되어야 할 것이기 때문에 이것도 빈처리가 되어야 한다.
+	-->
 	
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
 		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
@@ -30,5 +65,6 @@
 	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
 		<constructor-arg index="0" ref="sqlSessionFactory" />
 	</bean>
+	
 	
 </beans>

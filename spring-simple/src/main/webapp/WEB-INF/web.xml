@@ -48,6 +48,7 @@
 		<url-pattern>*.van</url-pattern>
 	</servlet-mapping>
 	
+	<!-- POST 방식으로 넘어오는 한글 데이터의 깨짐을 방지하기 위한 필터링 처리 -->
 	<filter>
 		<filter-name>encodingFilter</filter-name>
 		<filter-class>
