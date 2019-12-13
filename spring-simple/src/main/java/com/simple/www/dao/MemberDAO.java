@@ -30,4 +30,12 @@ public class MemberDAO {
 //		public String getName(int mno) {
 		return sqlSession.selectOne("mSQL.selName", mno);
 	}
+	
+	public int editInfo(MemberVO vo) {
+		return sqlSession.update("mSQL.editInfo", vo);
+	}
+	
+	public MemberVO membInfo(String id) {
+		return sqlSession.selectOne("mSQL.membInfo", id);
+	}
 }

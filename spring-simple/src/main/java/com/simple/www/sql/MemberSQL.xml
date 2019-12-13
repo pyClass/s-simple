@@ -92,18 +92,42 @@
 								<typeAliases>
 									<typeAlias alias="???" type="경로" />
 								</typeAliases>
-						
-		
-			
+							
 	-->
 	
+		
+	<!-- 
+		<sql>
+		반복해서 작성해야 되는 질의 명령을
+		미리 작성을 해놓고
+		이후 필요한 라인에 추가해서 사용하도록 해주는 태그
+		
+		사용할 때 이것도 태그이므로 아이디가 존재해야 선택해서 사용할 수 있을 것이다.
+		따라서 작성할 때 아이디도 같이 작성해야 한다.
+		
+		사용방법 ]
+			<include refid="id값" />
+	 -->
+	<sql id="selCNT">
+		SELECT
+			count(*) cnt
+		FROM
+			member
+		WHERE
+			m_id =
+	</sql>
+	
+	
 	<select id="Login" resultType="int" parameterType="mVO">
+		<!-- 
 		SELECT
 			count(*) cnt
 		FROM
 			member
 		WHERE
 			m_id = #{id}
+		-->
+		<include refid="selCNT" /> #{id}
 			AND m_pw = #{pw}
 	</select>
 	<!-- 
@@ -118,15 +142,29 @@
 			그 범위는 클래스 내부로 한정되어진다.
 			이때 마이바티스는 자동으로 해당 변수의 getter 함수를 호출해서 데이터를 가져오게 된다.
 	-->
-	
-	<select id="idCount" resultType="int" parameterType="String">
+	<select id="idCount" resultType="int" parameterType="string">
 <!-- 	<select id="idCount" resultType="mVO" parameterType="String"> -->
+		<!-- 
 		SELECT
 			count(*) cnt
 		FROM
 			member
 		WHERE
 			m_id = #{id}
+		 -->
+		 <include refid="selCNT" /> #{id}
+	</select>
+	
+	<select id="membInfo" resultType="mVO" parameterType="string">
+		SELECT
+			m_no mno, m_id id, m_name name, m_mail mail,
+			m_tel tel, to_char(m_join, 'yyyy-mm-dd HH24:MI:ss') sDate, 
+			m_avt avt, a_img avatar
+		FROM
+			member, avatar
+		WHERE
+			m_avt = a_no
+			AND m_id = #{id}
 	</select>
 	
 	<select id="idList" resultType="mVO">
@@ -149,5 +187,34 @@
 		WHERE
 			m_no = to_number(#{mno})
 	</select>
+	
+	<insert id="addMember" parameterType="mVO">
+		<selectKey keyProperty="mno" resultType="int" order="BEFORE">
+			SELECT
+				NVL(MAX(m_no) + 1, 1001)
+			FROM
+				member
+		</selectKey>
+		INSERT INTO
+			member
+		VALUES(
+<!-- 			(SELECT NVL(MAX(m_no) + 1), 1001) FROM member), -->
+			#{mno}, #{id}, #{pw}, #{name}, 
+			#{mail}, #{tel}, sysdate, #{avt}, #{gen}
+		)
+	</insert>
+	
+	<update id="editInfo" parameterType="mVO">
+		UPDATE
+			member
+		<trim prefix="SET" suffixOverrides=",">
+			<if test="pw != null">m_pw = #{pw},</if>
+			<if test="mail != null">m_mail = #{mail},</if>
+			<if test="tel != null">m_tel = #{tel},</if>
+			<if test="avt != 0">m_avt = #{avt},</if>
+		</trim>
+		WHERE
+			m_no = #{mno}
+	</update>
 	
 </mapper>

@@ -29,9 +29,23 @@ public class MemberVO {
 	private Time joinTime;
 	private String sDate;
 	private String sTime;
-	private String avatar;
+	private int avt; 		// 아바타 번호 저장할 변수
+	private String avatar; 	// 아바타 파일이름 저장할 변수
+	private String gen;
 	private int cnt;
 	
+	public int getAvt() {
+		return avt;
+	}
+	public void setAvt(int avt) {
+		this.avt = avt;
+	}
+	public String getGen() {
+		return gen;
+	}
+	public void setGen(String gen) {
+		this.gen = gen;
+	}
 	public int getCnt() {
 		return cnt;
 	}

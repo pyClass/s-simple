@@ -31,29 +31,29 @@
 			// 해당 태그에 적용시켜주면 된다.
 			
 			$.ajax({
-				url : "/member/membInfo.ck",
+				url : "/www/member/membInfo.van",
 				type : "post",
 				dataType : "json",
 				data : {
-					mid : tid
+					id : tid
 				},
 				success : function(data){
 					alert("success");
 					$('#mno').html(data.mno);
-					$('#mid').html(data.mid);
-					$('#mname').html(data.mname);
-					$('#mmail').html(data.mmail);
-					$('#mtel').html(data.mtel);
-					$('#mdate').html(data.mdate);
+					$('#mid').html(data.id);
+					$('#mname').html(data.name);
+					$('#mmail').html(data.mail);
+					$('#mtel').html(data.tel);
+					$('#mdate').html(data.sDate);
 					$('#detail').css('display', 'block');
 					
 					$('#infoEdit').click(function(){
 						$('#no').html(data.mno);
-						$('#id').html(data.mid);
-						$('#name').html(data.mname);
-						$('#mail').val(data.mmail);
-						$('#tel').val(data.mtel);
-						$('#date').html(data.mdate);
+						$('#id').html(data.id);
+						$('#name').html(data.name);
+						$('#mail').val(data.mail);
+						$('#tel').val(data.tel);
+						$('#date').html(data.sDate);
 						$('#detail').css('display', 'none');
 						$('#edit').css('display', 'block');			
 					});
@@ -76,26 +76,16 @@
 			
 			if(mail1 == mail2 && tel1 == tel2){
 				return;
-			} else if(mail1 == mail2){
-				// 전화번호만 수정한 경우
-				code = 3;
-			} else if(tel1 == tel2){
-				// 메일만 수정한 경우
-				code = 2;
-			} else {
-				// 전화번호와 메일 둘다 수정한 경우
-				code = 1;
 			}
 			
 			$.ajax({
-				url : "/member/infoEdit.ck",
+				url : "/www/member/infoEdit.van",
 				type: "post",
 				dataType: "json",
 				data : {
 					"mno" : no,
 					"mail" : mail2,
-					"tel" : tel2,
-					"code" : code
+					"tel" : tel2
 				},
 				success : function(data){
 					if(data.cnt == 1){

@@ -84,7 +84,10 @@ public class Member {
 		return mv;
 	}
 	
-	@RequestMapping(value="idCheck.van", produces="text/plain;charset=UTF-8")
+	@RequestMapping(value="idCheck.van")
+	/*
+	 * @RequestMapping(value="idCheck.van", produces="text/plain;charset=UTF-8")
+	 */	
 	@ResponseBody
 	public int idCheck(String id) {
 //	public MemberVO idCheck(String id) {
@@ -113,5 +116,20 @@ public class Member {
 		 */
 		return cnt;
 //		return vo;
+	}
+	
+	@RequestMapping("membInfo.van")
+	@ResponseBody
+	public MemberVO membInfo(String id) {
+		MemberVO vo = mDAO.membInfo(id);
+		return vo;
+	}
+	
+	@RequestMapping("infoEdit.van")
+	public @ResponseBody MemberVO editInfo(MemberVO vo) {
+		System.out.println(vo.getMno());
+		vo.setCnt(mDAO.editInfo(vo));
+		
+		return vo;
 	}
 }

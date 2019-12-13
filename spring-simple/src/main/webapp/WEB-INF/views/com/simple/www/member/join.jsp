@@ -104,16 +104,16 @@
 			var sid = $('#id').val();
 			
 			$.ajax({
-				url : "/www/member/idCheck.van",
+				url : "idCheck.van",
 				type : "post",
 				dataType : "text",
-/* 				dataType : "json", */
+/*  				dataType : "json", */
 				data : {
 					"id" : sid
 				},
 				success : function(data){
-					var ck = data;
-/* 					var ck = data.cnt; */
+ 					var ck = data;
+/*  					var ck = data.cnt; */
 					if(ck == 1){
 						// 이미 회원 가입한 사람이 있는 경우
 						$('#id').val("");
