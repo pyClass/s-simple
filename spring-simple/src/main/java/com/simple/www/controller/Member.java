@@ -7,18 +7,23 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
 import com.simple.www.dao.*;
 import com.simple.www.vo.*;
+import com.simple.www.services.*;
 
 @Controller
 @RequestMapping("/member/")
 public class Member {
 	@Autowired
 	MemberDAO mDAO;
+	@Autowired
+	FileService fileSrvc;
 	
 	@RequestMapping("login.van")
 	public ModelAndView loginForm(ModelAndView mv) {
@@ -89,7 +94,7 @@ public class Member {
 	 * @RequestMapping(value="idCheck.van", produces="text/plain;charset=UTF-8")
 	 */	
 	@ResponseBody
-	public int idCheck(String id) {
+	public int idCheck(@RequestParam String id) {
 //	public MemberVO idCheck(String id) {
 		int cnt = 0;
 		cnt = mDAO.idCheck(id);
@@ -131,5 +136,12 @@ public class Member {
 		vo.setCnt(mDAO.editInfo(vo));
 		
 		return vo;
+	}
+	
+	@RequestMapping("fileUp.van")
+	public void fileUp(MultipartFile upfile, HttpSession session) {
+		try{
+			fileSrvc.singleUpProc(session, upfile);
+		} catch(Exception e) {}
 	}
 }

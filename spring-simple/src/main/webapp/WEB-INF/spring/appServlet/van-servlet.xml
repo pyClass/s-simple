@@ -19,9 +19,37 @@
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<beans:property name="prefix" value="/WEB-INF/views/com/simple/www/" />
 		<beans:property name="suffix" value=".jsp" />
+		<beans:property name="order" value="1" />
+	</beans:bean>
+	
+	<!-- 파일 업로드를 위한 뷰 서블릿 설정 -->
+	<beans:bean id="multipartResolver" 
+			class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+			<beans:property name="maxUploadSize" value="50000000" />
+			<beans:property name="maxInMemorySize" value="50000000" />
+			<beans:property name="defaultEncoding" value="UTF-8" />
+	</beans:bean>
+	
+	<!-- 파일 다운로드를 위한 뷰 서블릿 설정 -->
+	<beans:bean class="org.springframework.web.servlet.view.BeanNameViewResolver">
+		<!-- 
+				뷰의 실행 우선 순위를 지정하는 부분이다.
+				스프링은 컨트롤러가 반환값을 주지 않아도
+				자동 뷰가 실행된다.( ==> 요청 이름을 이용해서 뷰가 정해진다. )
+				
+				문제점 ] 뷰를 다른 뷰로 선택하더라도 자동 뷰가 있다.
+				
+				해결책 ] 
+						뷰의 우선 순위를 두어서 어떤 뷰가 먼저 실행될지를 지정하게 된다.
+						일반뷰는 우선 순위가 1로 자동으로 지정된다.
+						지금처럼 만드는 뷰(요청)는 우선 순위를 1보다 앞선 순위로  
+						지정하여 자동뷰가 실행되지 않도록 해주면 되겠다.
+		 -->
+		 <beans:property name="order" value="0" />
 	</beans:bean>
 	
 	<beans:import resource="daoContext.xml" />
+	<beans:import resource="serviceContext.xml" />
 	
 	<context:component-scan base-package="com.simple.www" />
 	

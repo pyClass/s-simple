@@ -8,8 +8,6 @@
 						http://www.springframework.org/schema/context 
 						https://www.springframework.org/schema/context/spring-context.xsd">
 
-	<bean id="fileDown" class="com.simple.www.util.DownloadUtil" />
-	
-	<bean id="mDAO" class="com.simple.www.dao.MemberDAO" />
+	<bean id="fileSrvc" class="com.simple.www.services.FileService" />
 	
 </beans>
