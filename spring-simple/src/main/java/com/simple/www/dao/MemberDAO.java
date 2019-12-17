@@ -22,6 +22,11 @@ public class MemberDAO {
 		return sqlSession.selectOne("mSQL.idCount", id);
 	}
 	
+	// 회원가입 처리 전담 처리함수
+	public int insertMemb(MemberVO mVO) {
+		return sqlSession.insert("mSQL.addMember", mVO);
+	}
+	
 	public List<MemberVO> getIdList(){
 		return sqlSession.selectList("mSQL.idList");
 	}

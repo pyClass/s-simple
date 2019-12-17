@@ -167,7 +167,8 @@
 	<div class="container">
 		<div class="joinLogo">J O I N</div>
 		<div class="listbox">
-	<form method="POST" action="/member/joinProc.van" enctype="multipart/form-data">
+	<form method="POST" action="/www/member/joinProc.van" enctype="multipart/form-data">
+<!-- 	<form method="POST" action="/member/joinProc.van" enctype="multipart/form-data"> -->
 		<ul class="ulcl w3-margin-bottom w3-padding">
 			<li id="idli">
 				<label for="id">I D</label>
@@ -254,7 +255,7 @@
 				<div class="w3-col">
 					<label for="prof">프로필사진</label>
 					<div class="w3-col w3-padding prof">
-						<input type="file" name="prof" id="prof" 
+						<input type="file" name="sFile" id="prof" 
 								class="w3-file profIn" style="height: 50px;">
 					</div>
 					<div id="" class="w3-padding w3-center">

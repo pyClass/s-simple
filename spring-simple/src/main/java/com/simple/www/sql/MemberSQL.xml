@@ -198,11 +198,28 @@
 		INSERT INTO
 			member
 		VALUES(
-<!-- 			(SELECT NVL(MAX(m_no) + 1), 1001) FROM member), -->
 			#{mno}, #{id}, #{pw}, #{name}, 
 			#{mail}, #{tel}, sysdate, #{avt}, #{gen}
 		)
 	</insert>
+	
+	<insert id="addPic" parameterType="fVO">
+		<selectKey keyProperty="pno" resultType="int" order="BEFORE">
+			SELECT
+				NVL(MAX(p_no) + 1, 1000001)
+			FROM
+				m_photo
+		</selectKey>
+		INSERT INTO
+			m_photo(
+				p_no, p_mno, p_oriname, p_savename, 
+				p_len, p_dir
+			)
+		VALUES(
+			#{pno}, #{mno}, #{oriName}, #{saveName}, #{len}, #{dir}
+		)
+	</insert>
+	
 	
 	<update id="editInfo" parameterType="mVO">
 		UPDATE

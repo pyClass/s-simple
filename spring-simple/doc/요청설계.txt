@@ -13,8 +13,19 @@
 2. 로그인 처리 요청
 
 3. 회원가입 폼 보기
+	요청내용	: 	/www/member/join.van
+	파라미터	: 	무
+	컨트롤러	:	com.simple.www.controller.Member
+	처리함수	:	joinForm()
+	응답문서	:	/WEB-INF/views/member/join.jsp
 
 4. 회원가입 처리 요청
+	요청내용	: 	/www/member/joinProc.van
+	파라미터	: 	무
+	컨트롤러	:	com.simple.www.controller.Member
+	처리함수	:	joinProc()
+	응답문서	:	성공 - /www/guestBoard/gboard.van
+				실패 - /www/member/join.van
 
 5.0 회원 아이디 리스트
 	요청내용	: 	/member/showId.van

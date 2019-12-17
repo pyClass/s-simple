@@ -33,6 +33,7 @@
 	-->
 	<typeAliases>
 		<typeAlias alias="mVO" type="com.simple.www.vo.MemberVO" />
+		<typeAlias alias="fVO" type="com.simple.www.vo.FileVO" />
 	</typeAliases>
 	
 	<!-- mybatis에서 사용할 질의명령문서 추가 -->

@@ -23,6 +23,8 @@ public class Member {
 	@Autowired
 	MemberDAO mDAO;
 	@Autowired
+	FileDAO fDAO;
+	@Autowired
 	FileService fileSrvc;
 	
 	@RequestMapping("login.van")
@@ -66,6 +68,24 @@ public class Member {
 	public ModelAndView joinForm(ModelAndView mv) {
 		mv.setViewName("member/join");
 		
+		return mv;
+	}
+	
+	@RequestMapping("joinProc.van")
+	public ModelAndView joinProc(ModelAndView mv, RedirectView rv, 
+									HttpSession session, MemberVO mVO) {
+		// 할일
+		// 1. 회원정보 입력하고
+		int cnt = mDAO.insertMemb(mVO);
+		if(cnt != 1) {
+			rv.setUrl("/www/member/join.van");
+		} else {
+			session.setAttribute("SID", mVO.getId());
+			fileSrvc.setDAO(fDAO);
+			fileSrvc.singleUpProc(session, mVO);
+			rv.setUrl("/www/guestBoard/gboard.van");
+		}
+		mv.setView(rv);
 		return mv;
 	}
 	
@@ -139,9 +159,9 @@ public class Member {
 	}
 	
 	@RequestMapping("fileUp.van")
-	public void fileUp(MultipartFile upfile, HttpSession session) {
+	public void fileUp(HttpSession session, MemberVO mVO) {
 		try{
-			fileSrvc.singleUpProc(session, upfile);
+			fileSrvc.singleUpProc(session, mVO);
 		} catch(Exception e) {}
 	}
 }
