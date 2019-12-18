@@ -80,9 +80,9 @@ public class Member {
 		if(cnt != 1) {
 			rv.setUrl("/www/member/join.van");
 		} else {
-			session.setAttribute("SID", mVO.getId());
+			session.setAttribute("SID", mVO.getId()); // 회원가입이 성공했으므로 로그인 처리해준다.
 			fileSrvc.setDAO(fDAO);
-			fileSrvc.singleUpProc(session, mVO);
+			fileSrvc.membAddProc(session, mVO);
 			rv.setUrl("/www/guestBoard/gboard.van");
 		}
 		mv.setView(rv);
@@ -157,11 +157,46 @@ public class Member {
 		
 		return vo;
 	}
-	
+
+	/*
+	 * 파일 업로드 확인용 함수
 	@RequestMapping("fileUp.van")
 	public void fileUp(HttpSession session, MemberVO mVO) {
 		try{
-			fileSrvc.singleUpProc(session, mVO);
+			fileSrvc.membAddProc(session, mVO);
 		} catch(Exception e) {}
 	}
+	*/
+	
+	@RequestMapping("test.van")
+	public ModelAndView doTest(ModelAndView mv) {
+		ArrayList list = mDAO.membTest01();
+		System.out.println("" + list.get(0).toString());
+		mv.addObject("LIST", list);
+		mv.setViewName("member/test");
+		return mv;
+	}
+	
+	@RequestMapping("test02.van")
+	public ModelAndView doTest(ModelAndView mv, HashMap<String, String> map) {
+		map.put("id", "euns");
+		map.put("name", "전은석");
+		ArrayList list = mDAO.membTest02(map);
+		System.out.println("" + list.get(0).toString());
+		mv.addObject("LIST", list);
+		mv.setViewName("member/test");
+		return mv;
+	}
+	
+	/*
+	@RequestMapping("test03.van") // /www/member/test03.van?id=euns&name=전은석 의 형태로 요청
+	public ModelAndView doTest01(ModelAndView mv, Map<String, String> map) {
+		System.out.println("### map : " + map.toString());
+		ArrayList list = mDAO.membTest02(map);
+		System.out.println("" + list.get(0).toString());
+		mv.addObject("LIST", list);
+		mv.setViewName("member/test");
+		return mv;
+	}
+	*/
 }

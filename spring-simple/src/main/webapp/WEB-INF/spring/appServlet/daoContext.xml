@@ -12,5 +12,6 @@
 	
 	<bean id="mDAO" class="com.simple.www.dao.MemberDAO" />
 	<bean id="fDAO" class="com.simple.www.dao.FileDAO" />
+	<bean id="rbDAO" class="com.simple.www.dao.ReBoardDAO" />
 	
 </beans>

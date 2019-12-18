@@ -43,4 +43,12 @@ public class MemberDAO {
 	public MemberVO membInfo(String id) {
 		return sqlSession.selectOne("mSQL.membInfo", id);
 	}
+	
+	public ArrayList membTest01() {
+		return (ArrayList) sqlSession.selectList("mSQL.test01");
+	}
+	
+	public ArrayList membTest02(HashMap map) {
+		return (ArrayList) sqlSession.selectList("mSQL.test02", map);
+	}
 }

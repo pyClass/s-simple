@@ -44,9 +44,11 @@ public class FileVO {
 	public String getDir() {
 		return dir;
 	}
-	public void setDir(String dir) {
+	public void setDir() {
 		this.dir = "/resources/upload";
-//		this.dir = dir;
+	}
+	public void setDir(String dir) {
+		this.dir = dir;
 	}
 	public Date getpDate() {
 		return pDate;

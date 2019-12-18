@@ -13,13 +13,14 @@ import com.simple.www.vo.FileVO;
 import com.simple.www.vo.MemberVO;
 
 public class FileService {
-	FileDAO fDAO;
-	public void setDAO(FileDAO fDAO) {
-		this.fDAO = fDAO;
+	Object dao;
+	String spath;
+	public void setDAO(Object dao) {
+		this.dao = dao;
 	};
 	
 	// 단일 파일 업로드를 처리할 함수
-	public String singleUpProc(HttpSession session, MemberVO mVO) {
+	public String singleUpProc(HttpSession session, MultipartFile multi, String spath) {
 		// 이 함수는 파일을 업로드 하기 위해서 컨트롤러에서 업로드할 파일의 정보를 받아와야 한다.
 		// 그 정보는 MultipartFile 이라는 타입으로 전송이 될 것이고
 		// 거기서 꺼내서 사용해야 한다.
@@ -29,7 +30,7 @@ public class FileService {
 		
 		long len = 0;
 		
-		String spath =  session.getServletContext().getRealPath("resources/upload");
+		this.spath =  session.getServletContext().getRealPath(spath);
 		/*
 		String path = this.getClass().getResource("/").getPath();
 		int idx = path.indexOf("/WEB-INF");
@@ -38,13 +39,14 @@ public class FileService {
 		*/
 		
 		String rePath = spath.substring(0, spath.indexOf("\\source\\.metadata"));
-		rePath = rePath + "\\git\\s-simple\\spring-simple\\src\\main\\webapp\\resources\\upload\\";
+		String path2 = spath.replaceAll("/", "\\");
+		rePath = rePath + "\\git\\s-simple\\spring-simple\\src\\main\\webapp\\" + path2;
 		
 //		System.out.println("repath : " + rePath);
 		// 먼저 클라이언트가 업로드한 원본이름을 알아낸다.
 		String oriName = "";
 		try {
-			oriName = mVO.getsFile().getOriginalFilename();
+			oriName = multi.getOriginalFilename();
 		} catch(Exception e) {
 			return "";
 		}
@@ -67,14 +69,14 @@ public class FileService {
 		*/
 		try {
 			File file = new File(spath, saveName);
-			mVO.getsFile().transferTo(file);
+			multi.transferTo(file);
 //			System.out.println("### dao upfile complete!!!");
 			
-			len = mVO.getsFile().getSize();
+			len = multi.getSize();
 			
 			// 작업경로에 복사
 			file = new File(rePath, saveName);
-			mVO.getsFile().transferTo(file);
+			multi.transferTo(file);
 			/*
 			fin = new FileInputStream(file);
 			bin = new BufferedInputStream(fin);
@@ -102,29 +104,38 @@ public class FileService {
 			*/
 		}
 		
-		FileVO fVO = new FileVO();
-		fVO.setMno(mVO.getMno());
-		fVO.setOriName(oriName);
-		fVO.setSaveName(saveName);
-		fVO.setDir(fVO.getDir());
-		fVO.setLen(len);
-		fDAO.insertPhoto(fVO);
 		return saveName;
 	}
 	
 	// 다중 파일 업로드 처리 함수
-	public String[] uploadProc(HttpSession session, MemberVO mVO) {
+	public String[] uploadProc(HttpSession session, MultipartFile[] multi, String spath) {
 		//  이 함수는 다중 파일 업로드를 처리할 함수
 		// 그런데 단일파일을 처리할 함수를 이미 만들어 놓았다.
 		// 따라서 위에서 만든 함수를 호출해서 반복처리만 해주면 될 것이다.
 		
-		String[] saveName = new String[mVO.getFile().length];
+		String[] saveName = new String[multi.length];
 		
-		for(int i = 0; i < mVO.getFile().length ; i++) {
-			saveName[i] = singleUpProc(session, mVO);
+		for(int i = 0; i < multi.length ; i++) {
+			saveName[i] = singleUpProc(session, multi[i], spath);
 		}
 		
 		return saveName;
 	}
 	
+	// 회원가입 파일업로드 전담 처리함수
+	public int membAddProc(HttpSession session, MemberVO mVO) {
+		int cnt = 0;
+		String saveName = singleUpProc(session, mVO.getsFile(), "resources/upload");
+		
+		FileVO fVO = new FileVO();
+		fVO.setMno(mVO.getMno());
+		fVO.setOriName(mVO.getsFile().getOriginalFilename());
+		fVO.setSaveName(saveName);
+		fVO.setDir();
+		fVO.setLen(mVO.getsFile().getSize());
+		
+		cnt = ((FileDAO) dao).insertPhoto(fVO);
+		
+		return cnt;
+	}
 }

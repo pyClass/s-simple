@@ -32,8 +32,11 @@
 		따라서 필요한 데이터 타입이 있다면 typeAliases 태그에 추가해서 사용하면 된다.
 	-->
 	<typeAliases>
+		<typeAlias alias="page" type="com.simple.www.util.PageUtil" />
+		
 		<typeAlias alias="mVO" type="com.simple.www.vo.MemberVO" />
 		<typeAlias alias="fVO" type="com.simple.www.vo.FileVO" />
+		<typeAlias alias="rbVO" type="com.simple.www.vo.ReboardVO" />
 	</typeAliases>
 	
 	<!-- mybatis에서 사용할 질의명령문서 추가 -->
@@ -50,6 +53,7 @@
 	 -->
 	<mappers>
 		<mapper resource="com/simple/www/sql/MemberSQL.xml" />
+		<mapper resource="com/simple/www/sql/ReBoardSQL.xml" />
 	</mappers>
 	
 	

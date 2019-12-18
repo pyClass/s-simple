@@ -73,5 +73,17 @@
 7]	페이징 처리(옵션)
 
 
+=======================================================================
+
+# 댓글게시판
+
+1. 게시판 폼보기 요청
+	요청내용	: 	/board/reBoardForm.van
+	파라미터	:	(nowPage)
+	컨트롤러	:	com.simple.www.controller.ReBoard
+	처리함수	:	reBoardForm()
+	응답문서	:	/com/simple/www/board/reboard.jsp
+
+
 	
 

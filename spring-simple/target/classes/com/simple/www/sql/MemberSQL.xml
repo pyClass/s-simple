@@ -167,6 +167,29 @@
 			AND m_id = #{id}
 	</select>
 	
+	<select id="test01" resultType="hashmap">
+		SELECT
+			m_no mno, m_id id, m_name name, m_mail mail,
+			m_tel tel, to_char(m_join, 'yyyy-mm-dd HH24:MI:ss') sDate, 
+			m_avt avt, a_img avatar
+		FROM
+			member, avatar
+		WHERE
+			m_avt = a_no
+	</select>
+	
+	<select id="test02" resultType="hashmap" parameterType="hashmap">
+		SELECT
+			m_no mno, m_id id, m_name name, m_mail mail,
+			m_tel tel, to_char(m_join, 'yyyy-mm-dd HH24:MI:ss') sDate, 
+			m_avt avt, a_img avatar
+		FROM
+			member, avatar
+		WHERE
+			m_avt = a_no
+			AND m_id = #{id}
+	</select>
+	
 	<select id="idList" resultType="mVO">
 		SELECT
 			m_no mno, m_id id, 
@@ -224,14 +247,17 @@
 	<update id="editInfo" parameterType="mVO">
 		UPDATE
 			member
-		<trim prefix="SET" suffixOverrides=",">
+		<set>
 			<if test="pw != null">m_pw = #{pw},</if>
 			<if test="mail != null">m_mail = #{mail},</if>
 			<if test="tel != null">m_tel = #{tel},</if>
 			<if test="avt != 0">m_avt = #{avt},</if>
-		</trim>
-		WHERE
-			m_no = #{mno}
+		</set>
+		<if test="mno != 0">
+			<trim prefix="WHERE" prefixOverrides="AND|OR">
+				<if test="mno != 0">AND m_no = #{mno}</if>
+			</trim>
+		</if>
 	</update>
 	
 </mapper>

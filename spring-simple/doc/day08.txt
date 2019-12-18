@@ -1,0 +1,212 @@
+# day08.txt
+
+* mybatis 에서 사용하는 조건 처리 명령
+
+	1. if
+		형식]
+			<if test="조건식">내용</if>
+	2. choose ~ when ~ otherwise
+		형식]
+			<choose>
+				<when test="조건식1">내용1</when>
+				<when test="조건식2">내용2</when>
+				<when test="조건식3">내용3</when>
+				...
+				<otherwise>기본내용</otherwise>
+			</choose>
+			
+	3. trim
+		==> 질의명령의 특성상 조건식을 처리할 때
+			첫번째 조건은 그냥 쓰면 되지만
+			두번째 조건부터는 AND나 OR로 연결해야 한다.
+			또는 업데이트 질의명령의 경우
+			업데이트할 내용을 나열할 경우
+			각각의 내용이 , 로 이어져야 한다.
+			
+			이때 조건이 첫번째 나오는 것인지 아니면 두번째로 나오는 것인지에 따라서
+			붙여줘야할 키워드가 달라질 것이고
+			이 문제를 해결하기 위해서 만들어진 기능이다.
+			
+		형식 1]
+			<trim prefix="WHERE" prefixOverrides="AND|OR"></trim>
+			
+		형식 2]
+			<trim prefix="SET" surfixOverrides=","></trim>
+		
+		예 1]
+			SELECT
+				*
+			FROM
+				member
+			WHERE
+				m_isshow = 'Y'
+				AND m_name LIKE '김%'
+			;
+			
+			==>
+			SELECT
+				*
+			FROM
+				member
+			<trim prefix="WHERE" prefixOverrides="AND|OR">
+				<if test="">
+					AND m_isshow ='Y'
+				</if>
+				<if test="">
+					AND m_name LIKE '김%'
+				</if>
+				<if test="">
+					AND m_GEN = 'F'
+				</if>
+			</trim>
+			
+		예 2]
+			
+			UPDATE
+				member
+			SET
+				m_pw = ???,
+				m_mail = ???,
+				m_tel = ???,
+				m_isshow = ???
+			WHERE
+				m_no = ???
+				
+			==>
+			UPDATE
+				member
+			<trim prefix="SET" surfixOverrides=",">
+				<if test="pw != null">m_pw = #{pw},</if>
+				<if test="mail != null">m_mail = #{mail},</if>
+				<if test="tel != null">m_tel = #{tel},</if>
+				<if test="isshow != null">m_isshow = 'N',</if>
+			</trim>
+			WHERE
+				m_no = #{mno}
+				
+	4. foreach
+		형식 ]
+			<foreach item="변수이름" index="st" collection="데이터"
+					open="???" separator="???" close="???">
+			</foreach>
+		
+		==> ArrayList에 담김 데이터 개수만큼 반복하면서
+			특정 질의 명령을 만들어주는 명령
+			item		: 변수
+			index		: 순서를 기억할 변수
+			collection	: ArrayList(실제 데이터가 담긴 변수)
+			open		: 반복 전 처리할 내용
+			separator	: 매 반복마다 처리할 내용
+			close		: 반복이 끝나면 처리할 내용
+			
+		예 ]
+			SELECT
+				*
+			FROM
+				AVATAR
+			WHERE
+				A_NO IN (12)
+				A_NO IN (12, 13)
+				A_NO IN (12, 13, 15,)
+				A_NO IN (12, 13, 15, 16)
+			;
+			
+			==>
+			SELECT
+				*
+			FROM
+				avatar
+			WHERE
+				a_no IN
+				<foreach item="data" index="index" collection="list"
+						open="(" close=")" separator=",">
+						#{data}
+				</foreach>
+				
+	5. set
+		==> update 명령의 set 절을 만들어주는 태그
+		
+			형식]
+				<set>
+					<if test="">내용,</if>
+					<if test="">내용,</if>
+					<if test="">내용,</if>
+					...
+					<if test="">내용,</if>
+				</set>
+			예]
+				UPDATE
+					member
+				<set>
+					<if test="pw != null">m_pw = #{pw},</if>
+					<if test="mail != null">m_mail = #{mail},</if>
+					<if test="tel != null">m_tel = #{tel},</if>
+					<if test="isshow != null">m_isshow = 'N',</if>
+				</set>
+				<trim prefix="WHERE" surfixOverrides="AND|OR"
+					<if test="mno != null">m_no = #{mno}</if>
+				</trim>
+			
+
+
+-------------------------------------------------------------
+게시판 리스트 질의 명령
+
+			
+select
+    *
+from
+    (SELECT
+				ROWNUM rno, m_id, avt, rb_no, rb_body,
+				rb_date, rb_upno, (level - 1) lvl
+			FROM
+				(
+					SELECT
+						m_id, a_img avt, rb_no, rb_body, rb_date, rb_upno
+					FROM
+						reboard, member, avatar
+					WHERE
+						RB_ISSHOW = 'Y'
+						AND m_no = rb_mno
+		                AND m_avt = a_no
+					)
+		        START WITH
+		            RB_UPNO IS NULL
+		        CONNECT BY
+		            PRIOR RB_NO = RB_UPNO
+		        ORDER SIBLINGS BY
+		            RB_DATE DESC
+    )
+where
+            rno between 2 and 4
+;
+
+-- system 계정에서 작업
+grant create any view to koitt;
+
+
+-- koitt 계정에서 작업
+create or replace view reboardlist 
+as
+    SELECT
+        ROWNUM rno,m_id id, a_img avatar, rb_no rbno, rb_body body, rb_date rbDate, rb_upno upno, (level - 1) lvl
+    FROM
+        reboard, member, avatar
+    WHERE
+        RB_ISSHOW = 'Y'
+        AND m_no = rb_mno
+        AND m_avt = a_no
+    START WITH
+        RB_UPNO IS NULL
+    CONNECT BY
+        PRIOR RB_NO = RB_UPNO
+    ORDER SIBLINGS BY
+        RB_DATE DESC
+;
+
+select * from reboardlist;	
+			
+			
+			
+			
+			

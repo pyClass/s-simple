@@ -131,19 +131,19 @@
 		});
 		
 		$('#boardList').click(function(){
-			$(location).attr('href', '/board/boardList.cls');
+			$(location).attr('href', '/www/board/boardList.van');
 		});
 		
 		$('#reboard').click(function(){
-			$(location).attr('href', '/board/reboard.cls');
+			$(location).attr('href', '/www/board/reBoardForm.van');
 		});
 		
 		$('#survey').click(function(){
-			$(location).attr('href', '/survey/survey.cls');
+			$(location).attr('href', '/www/survey/survey.van');
 		});
 		
 		$('#idList').click(function(){
-			$(location).attr('href', '/member/showId.van');
+			$(location).attr('href', '/www/member/showId.van');
 		});
 		
 		
