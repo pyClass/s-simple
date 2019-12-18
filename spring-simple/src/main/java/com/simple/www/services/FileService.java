@@ -20,7 +20,7 @@ public class FileService {
 	};
 	
 	// 단일 파일 업로드를 처리할 함수
-	public String singleUpProc(HttpSession session, MultipartFile multi, String spath) {
+	public String singleUpProc(HttpSession session, MultipartFile multi, String tpath) {
 		// 이 함수는 파일을 업로드 하기 위해서 컨트롤러에서 업로드할 파일의 정보를 받아와야 한다.
 		// 그 정보는 MultipartFile 이라는 타입으로 전송이 될 것이고
 		// 거기서 꺼내서 사용해야 한다.
@@ -30,7 +30,7 @@ public class FileService {
 		
 		long len = 0;
 		
-		this.spath =  session.getServletContext().getRealPath(spath);
+		spath =  session.getServletContext().getRealPath(tpath);
 		/*
 		String path = this.getClass().getResource("/").getPath();
 		int idx = path.indexOf("/WEB-INF");
@@ -39,7 +39,7 @@ public class FileService {
 		*/
 		
 		String rePath = spath.substring(0, spath.indexOf("\\source\\.metadata"));
-		String path2 = spath.replaceAll("/", "\\");
+		String path2 = tpath.replaceAll("/", "\\");
 		rePath = rePath + "\\git\\s-simple\\spring-simple\\src\\main\\webapp\\" + path2;
 		
 //		System.out.println("repath : " + rePath);
