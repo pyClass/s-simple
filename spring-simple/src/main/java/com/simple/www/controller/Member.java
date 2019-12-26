@@ -99,13 +99,19 @@ public class Member {
 	}
 	
 	@RequestMapping("showName.van")
-	public ModelAndView showName(String mno, String avt, ModelAndView mv) {
+	public ModelAndView showName(ModelAndView mv, RedirectView rv, 
+								HttpSession session, /*ArrayList<String> list*/LoginVO vo, String mno, String avt) {
 //		public ModelAndView showName(int mno, String avt, ModelAndView mv) {
+//		String str = list.get(0);
+//		String str = vo.getNotLogin();
+		String str = (String) session.getAttribute("NOTLOGIN");
+		if(str.equals("false")) {
+			String name = mDAO.getName(mno);
+			mv.addObject("avatar", avt);
+			mv.addObject("name", name);
+			mv.setViewName("member/showName");
+		}
 		
-		String name = mDAO.getName(mno);
-		mv.addObject("avatar", avt);
-		mv.addObject("name", name);
-		mv.setViewName("member/showName");
 		return mv;
 	}
 	
@@ -145,7 +151,8 @@ public class Member {
 	
 	@RequestMapping("membInfo.van")
 	@ResponseBody
-	public MemberVO membInfo(String id) {
+	public MemberVO membInfo(ModelAndView mv, RedirectView rv, 
+								HttpSession session, String id) {
 		MemberVO vo = mDAO.membInfo(id);
 		return vo;
 	}
@@ -171,32 +178,48 @@ public class Member {
 	@RequestMapping("test.van")
 	public ModelAndView doTest(ModelAndView mv) {
 		ArrayList list = mDAO.membTest01();
-		System.out.println("" + list.get(0).toString());
 		mv.addObject("LIST", list);
 		mv.setViewName("member/test");
 		return mv;
 	}
 	
 	@RequestMapping("test02.van")
-	public ModelAndView doTest(ModelAndView mv, HashMap<String, String> map) {
+	public ModelAndView doTest(ModelAndView mv, HashMap<String, Object> map) {
 		map.put("id", "euns");
 		map.put("name", "전은석");
-		ArrayList list = mDAO.membTest02(map);
+		ArrayList<MemberVO> list = (ArrayList<MemberVO>)mDAO.membTest02(map);
 		System.out.println("" + list.get(0).toString());
 		mv.addObject("LIST", list);
 		mv.setViewName("member/test");
 		return mv;
 	}
 	
-	/*
+	
 	@RequestMapping("test03.van") // /www/member/test03.van?id=euns&name=전은석 의 형태로 요청
-	public ModelAndView doTest01(ModelAndView mv, Map<String, String> map) {
+	public ModelAndView doTest(ModelAndView mv, @RequestParam Map<String, Object> map) {
 		System.out.println("### map : " + map.toString());
-		ArrayList list = mDAO.membTest02(map);
+		ArrayList<MemberVO> list = (ArrayList<MemberVO>)mDAO.membTest03(map);
 		System.out.println("" + list.get(0).toString());
 		mv.addObject("LIST", list);
 		mv.setViewName("member/test");
 		return mv;
 	}
-	*/
+	
+	@RequestMapping("test04.van") // /www/member/test03.van?id=euns&name=전은석 의 형태로 요청
+	public ModelAndView doTest(ModelAndView mv, @RequestParam ArrayList<Object> list1) {
+		System.out.println("### map : " + list1.toString());
+		ArrayList<MemberVO> list = (ArrayList<MemberVO>)mDAO.membTest04(list1);
+		System.out.println("" + list.get(0).toString());
+		mv.addObject("LIST", list);
+		mv.setViewName("member/test");
+		return mv;
+	}
+	
+	@RequestMapping("getNo.van")
+	@ResponseBody
+	public MemberVO getNo(MemberVO mVO) {
+		mVO.setCnt(mVO.getMno());
+		System.out.println(mVO.getMno());
+		return mVO;
+	}
 }

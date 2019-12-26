@@ -189,6 +189,19 @@
 			m_avt = a_no
 			AND m_id = #{id}
 	</select>
+	<select id="test03" resultType="hashmap" parameterType="list">
+		SELECT
+			m_no mno, m_id id, m_name name, m_mail mail,
+			m_tel tel, to_char(m_join, 'yyyy-mm-dd HH24:MI:ss') sDate, 
+			m_avt avt, a_img avatar
+		FROM
+			member, avatar
+		WHERE
+			m_avt = a_no
+			<foreach item="item" index="index" collection="list">
+			AND m_id = #{item.id}			
+			</foreach>
+	</select>
 	
 	<select id="idList" resultType="mVO">
 		SELECT

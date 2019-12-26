@@ -13,6 +13,9 @@ import com.simple.www.vo.FileVO;
 import com.simple.www.vo.MemberVO;
 
 public class FileService {
+	@Autowired
+	FileDAO fDAO;
+	
 	Object dao;
 	String spath;
 	public void setDAO(Object dao) {

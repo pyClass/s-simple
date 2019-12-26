@@ -44,11 +44,19 @@ public class MemberDAO {
 		return sqlSession.selectOne("mSQL.membInfo", id);
 	}
 	
-	public ArrayList membTest01() {
-		return (ArrayList) sqlSession.selectList("mSQL.test01");
+	public ArrayList<?> membTest01() {
+		return (ArrayList<?>) sqlSession.selectList("mSQL.test01");
 	}
 	
-	public ArrayList membTest02(HashMap map) {
-		return (ArrayList) sqlSession.selectList("mSQL.test02", map);
+	public ArrayList<?> membTest02(HashMap<String, Object> map) {
+		return (ArrayList<?>) sqlSession.selectList("mSQL.test02", map);
+	}
+	
+	public ArrayList<?> membTest03(Map<String, Object> map) {
+		return (ArrayList<?>) sqlSession.selectList("mSQL.test02", map);
+	}
+	
+	public ArrayList<?> membTest04(ArrayList<Object> list) {
+		return (ArrayList<?>) sqlSession.selectList("mSQL.test03", list);
 	}
 }

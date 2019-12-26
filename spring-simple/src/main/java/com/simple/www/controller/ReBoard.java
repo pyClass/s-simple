@@ -2,13 +2,17 @@ package com.simple.www.controller;
 
 import java.util.*;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.*;
+import org.springframework.web.servlet.view.RedirectView;
 
 import com.simple.www.dao.*;
 import com.simple.www.util.*;
+import com.simple.www.vo.LoginVO;
 
 @Controller
 @RequestMapping("/board")
@@ -41,6 +45,19 @@ public class ReBoard {
 		// 5. 뷰를 부른다.
 		mv.setViewName("board/reboard");
 		
+		return mv;
+	}
+	
+	@RequestMapping("writeForm.van")
+	public ModelAndView writeForm(ModelAndView mv, RedirectView rv,
+												HttpSession session, /*ArrayList<String> list*/LoginVO vo) {
+		System.out.println("### writeForm controller ###");
+//		String str = list.get(0);
+//		String str = vo.getNotLogin();
+		String str = (String) session.getAttribute("NOTLOGIN");
+		if(str.equals("false")) {
+			mv.setViewName("board/writeForm");
+		}
 		return mv;
 	}
 }
