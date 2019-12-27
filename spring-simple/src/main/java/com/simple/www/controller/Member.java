@@ -222,4 +222,10 @@ public class Member {
 		System.out.println(mVO.getMno());
 		return mVO;
 	}
+	
+	public void testTest(String id, String pw) {
+		System.out.println("### testTest() ###");
+		System.out.println(id);
+		System.out.println(pw);
+	}
 }
